@@ -1,10 +1,9 @@
 import express from 'express'
 
-import productController from '../controllers/productsController'
+import productController from '../controllers/ProductController'
 
 const router = express.Router()
-
+router.get('/search',productController.search)
 router.get('/',productController.index)
-router.get('/test',productController.test)
 
 export default router
