@@ -15,11 +15,12 @@ function ProductController() {
     this.search = async (req,res) => {
         try {
             if(req.query.type === 'less') {
-                const data = await Product.find({name : { $regex: req.query.q, $options: 'i' }}).limit(4)
-                res.status(200).json({data : data})
+                const data = await Product.find({name : { $regex: `${req.query.q}`, $options: 'i' }}).limit(4)
+                res.status(200).json({data})
+                return
             }
-            const data = await Product.find({name : { $regex: req.query.q, $options: 'i' }})
-            res.status(200).json({data : data})
+            const data = await Product.find({name : { $regex: `${req.query.q}`, $options: 'i' }})
+            res.status(200).json({data})
         } catch (error) {
             console.log(error)
         }
