@@ -1,5 +1,5 @@
 import Product from '../models/Product'
-import { handleGetType,handleGetPrice } from '../sevices/productSevices'
+import { handleGetType,handleGetPrice, handleGetSize } from '../sevices/productSevices'
 
 function ProductController() {
     
@@ -44,6 +44,19 @@ function ProductController() {
     this.getPrice = async (req,res) => {
         try {
             const data = await handleGetPrice(req.query.brand)
+            res.status(200).json({data})
+        } catch (error) {
+            res.status(500).json({data: {
+                errCode : -1,
+                mess : 'kết nối thật bại!!! vui lòng thử lại sau'
+            }})
+        }
+    }
+
+    //[GET] /api/products/get-size
+    this.getSize = async (req,res) => {
+        try {
+            const data = await handleGetSize(req.query.brand)
             res.status(200).json({data})
         } catch (error) {
             res.status(500).json({data: {

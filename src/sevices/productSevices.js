@@ -41,3 +41,22 @@ export const handleGetPrice= async(valueSearch) => {
 
     return data
 }
+
+export const handleGetSize= async(valueSearch) => {
+    let data = {}
+    try {
+        const getData = await Product.find().or([{ brand: valueSearch }, { size: valueSearch }]).distinct('size')
+        data = {
+            errCode : 0,
+            mess : 'kết nối thành công',
+            data : getData
+        }
+    } catch (error) {
+        data = {
+            errCode : -1,
+            mess : 'không thể kết nối đến db'
+        }
+    }
+
+    return data
+}
