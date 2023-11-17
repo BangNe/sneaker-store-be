@@ -1,5 +1,5 @@
 import Product from '../models/Product'
-import { handleGetType,handleGetPrice, handleGetSize } from '../sevices/productSevices'
+import { handleGetType,handleGetPrice, handleGetSize, handleGetMenuProduct, handleGetProductDetails } from '../sevices/productSevices'
 
 function ProductController() {
     
@@ -27,10 +27,23 @@ function ProductController() {
         }
     }
 
-    //[GET] /api/products/get-type
-    this.getType = async (req,res) => {
+    //[GET] /api/products/menu-product
+    this.getMenuProduct = async (req,res) => {
         try {
-            const data = await handleGetType(req.query.brand)
+            const data = await handleGetMenuProduct(req.query.data)
+            res.status(200).json({data})
+        } catch (error) {
+            res.status(500).json({data: {
+                errCode : -1,
+                mess : 'kết nối thật bại!!! vui lòng thử lại sau'
+            }})
+    }
+    }
+
+    //[GET] /api/products/get-product-details
+    this.getProductDetails = async (req,res) => {
+        try {
+            const data = await handleGetProductDetails(req.query.data)
             res.status(200).json({data})
         } catch (error) {
             res.status(500).json({data: {
@@ -41,9 +54,22 @@ function ProductController() {
     }
 
     //[GET] /api/products/get-type
+    this.getType = async (req,res) => {
+        try {
+            const data = await handleGetType(req.query.data)
+            res.status(200).json({data})
+        } catch (error) {
+            res.status(500).json({data: {
+                errCode : -1,
+                mess : 'kết nối thật bại!!! vui lòng thử lại sau'
+            }})
+        }
+    }
+
+    //[GET] /api/products/get-price
     this.getPrice = async (req,res) => {
         try {
-            const data = await handleGetPrice(req.query.brand)
+            const data = await handleGetPrice(req.query.data)
             res.status(200).json({data})
         } catch (error) {
             res.status(500).json({data: {
@@ -56,7 +82,7 @@ function ProductController() {
     //[GET] /api/products/get-size
     this.getSize = async (req,res) => {
         try {
-            const data = await handleGetSize(req.query.brand)
+            const data = await handleGetSize(req.query.data)
             res.status(200).json({data})
         } catch (error) {
             res.status(500).json({data: {
@@ -65,6 +91,7 @@ function ProductController() {
             }})
         }
     }
+    
 }
 
 export default new ProductController
